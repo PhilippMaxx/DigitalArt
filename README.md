@@ -1,15 +1,15 @@
 # DigitalArt
-Art made with digital media in JavaScript.
+>Art made with digital media in JavaScript. Tools used in this repository are mainly the JavaScript libraries [p5js](https://p5js.org) and [ml5js](https://ml5js.org).
 
-Tools used in this repository are mainly the JavaScript libraries P5js and ml5js.
+## Projects
+
+`Face2Pix` - Transform your webcam to an art machine.
+
+<img src="/Face2Pix/data/example1.png" width="320"> <img src="/Face2Pix/data/example2.png" width="320">
 
 ### Install
 
 `git clone https://github.com/PhilippMaxx/DigitalArt.git`
-
-### Projects
-
-`Face2Pix` - Transform your webcam to an art machine.
 
 ### How To Use
 
