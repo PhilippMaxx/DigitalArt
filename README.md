@@ -16,12 +16,18 @@ Projects
 Setup
 --------------------
 
-To run the sketches, you have to download the repository to your local machine.
+To run the sketches, you can go to the Github page:
+
+https://philippmaxx.github.io/DigitalArt/
+
+Or if you want to run the sketches locally, [you can download the repository to your local machine]("#running-the-sketches-locally").
+
+Running the Sketches locally
+--------------------
+
+First download the repository to your local machine:
 
 `git clone https://github.com/PhilippMaxx/DigitalArt.git`
-
-Running the Sketches
---------------------
 
 While most of the sketches work without running a local webserver, there are some sketches that will not run properly since they use external files<sup>1</sup> (e.g. images or data) to create and inform the visualization. To run the sketches, you are welcome to use a local webserver of your liking.
 

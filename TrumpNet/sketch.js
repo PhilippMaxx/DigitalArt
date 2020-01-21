@@ -99,6 +99,7 @@ function draw() {
   translate(centerX, centerY);
   scale(zoom);
   
+  // state = 0
 
   for (var i = 0; i < textTyped.length; i++) {
     var letter = textTyped.charAt(i);
