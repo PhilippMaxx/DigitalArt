@@ -20,15 +20,15 @@ Running the Sketches
 
 While most of the sketches work without running a local webserver, there are some sketches that will not run properly since they use external files<sup>2</sup> (e.g. images or data) to create and inform the visualization. To run the sketches, you are welcome to use a local webserver of your liking.
 
-There are many ways to start a local webserver. Please see the options below (not in any particular order)
+There are many ways to start a local webserver. Please see the option below
 
-**Option 1**
+**Option**
 
 One method is to to use the local webserver of your choice (e.g. [simple python webserver](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server)) and open up `localhost:<port>`in your browser<sup>1</sup>.
 
 ```
 $ cd DigitalArt
 
-$ python -m SimpleHTTPServer
-# check localhost:8000
+$ python -m SimpleHTTPServer 8008
+# check localhost:8008
 ```
