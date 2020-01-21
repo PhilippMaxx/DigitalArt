@@ -20,7 +20,7 @@ To run the sketches, you can go to the Github page:
 
 https://philippmaxx.github.io/DigitalArt/
 
-Or if you want to run the sketches locally, <li><a href="#running-the-sketches-locally">you can download the repository to your local machine</a></li>.
+Or if you want to run the sketches locally, <a href="#running-the-sketches-locally">you can download the repository to your local machine</a>.
 
 Running the Sketches locally
 --------------------
