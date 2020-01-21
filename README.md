@@ -5,16 +5,30 @@
 
 `Face2Pix` - Transform your webcam to an art machine.
 
-<img src="/Face2Pix/data/example1.png" width="320"> <img src="/Face2Pix/data/example2.png" width="320">
+<img src="/Face2Pix/images/example1.png" width="320"> <img src="/Face2Pix/images/example2.png" width="320">
+
+`TrumpNet` - Do you can write more than Donald Trump tweets?
+
+<img src="/TrumpNet/images/example.png" width="320">
 
 ### Install
 
 `git clone https://github.com/PhilippMaxx/DigitalArt.git`
 
-### How To Use
+Running the Sketches
+--------------------
 
-Make sure you have installed the Google Chrome browser. It may be you are running in permission issues with other browsers to access your webcam.
+While most of the sketches work without running a local webserver, there are some sketches that will not run properly since they use external files<sup>2</sup> (e.g. images or data) to create and inform the visualization. To run the sketches, you are welcome to use a local webserver of your liking.
 
-`cd <project>`
+There are many ways to start a local webserver. Please see the options below (not in any particular order)
 
-`open -a "Google Chrome" index.html`
+**Option 1**
+
+One method is to to use the local webserver of your choice (e.g. [simple python webserver](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server)) and open up `localhost:<port>`in your browser<sup>1</sup>.
+
+```
+$ cd DigitalArt
+
+$ python -m SimpleHTTPServer
+# check localhost:8000
+```
