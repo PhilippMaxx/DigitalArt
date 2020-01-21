@@ -83,6 +83,11 @@ function windowResized() {
 function draw() {
   background(255);
 
+  if (keyIsDown(107) || keyIsDown(187)) {
+    textTyped += splitText[state] + ' ';
+    state++;
+  }
+
   if (mouseIsPressed && mouseButton == LEFT) {
     centerX = mouseX - offsetX;
     centerY = mouseY - offsetY;
@@ -93,7 +98,7 @@ function draw() {
 
   translate(centerX, centerY);
   scale(zoom);
-  state = 0;
+  
 
   for (var i = 0; i < textTyped.length; i++) {
     var letter = textTyped.charAt(i);
@@ -122,22 +127,22 @@ function draw() {
       rotate(QUARTER_PI);
       break;
 
-    case 'T':
-      text(splitText[state], 0, 0);
-      translate(textWidth(splitText[state]), 0);
-      var dir = floor(random(0, 2));
-      if (dir == 0) {
-        image(shapeSpace, 1, -15);
-        translate(4, 1);
-        rotate(QUARTER_PI);
-        }
-      if (dir == 1) {
-        image(shapeSpace2, 1, -15);
-        translate(14, -5);
-        rotate(-QUARTER_PI);
-      }
-      state++;
-      break;
+    //case 'T':
+    //  text(splitText[state], 0, 0);
+    //  translate(textWidth(splitText[state]), 0);
+    //  var dir = floor(random(0, 2));
+    //  if (dir == 0) {
+    //    image(shapeSpace, 1, -15);
+    //    translate(4, 1);
+    //    rotate(QUARTER_PI);
+    //    }
+    //  if (dir == 1) {
+    //    image(shapeSpace2, 1, -15);
+    //    translate(14, -5);
+    //    rotate(-QUARTER_PI);
+    //  }
+    //  state++;
+    //  break;
 
     case '.':
       image(shapePeriod, 1, -55);
@@ -161,6 +166,9 @@ function draw() {
       image(shapeReturn, 1, -15);
       translate(1, 10);
       rotate(PI);
+      break;
+
+    case '+': // return
       break;
 
     default: // all others
