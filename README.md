@@ -9,7 +9,7 @@
 
 `TrumpNet` - Do you can write more than Donald Trump tweets?
 
-<img src="/TrumpNet/images/example.png">
+<img src="/TrumpNet/images/example.png" width="320">
 
 ### Install
 
