@@ -16,11 +16,9 @@ Projects
 Setup
 --------------------
 
-To run the sketches, you can go to the Github page:
+To run the sketches, you can go to the Github page: https://philippmaxx.github.io/DigitalArt/
 
-https://philippmaxx.github.io/DigitalArt/
-
-Or if you want to run the sketches locally, <a href="#running-the-sketches-locally">you can download the repository to your local machine</a>.
+Or if you want to run the sketches locally: <a href="#running-the-sketches-locally">download the repository to your local machine</a>
 
 Running the Sketches locally
 --------------------
