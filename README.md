@@ -1,6 +1,6 @@
 DigitalArt
 ==================
->Art made with digital media in JavaScript. Tools used in this repository are mainly the JavaScript libraries [p5js](https://p5js.org) and [ml5js](https://ml5js.org).
+>Art made with digital media in JavaScript. Tools used in this repository are mainly the JavaScript libraries [p5js](https://p5js.org), [Tonejs](https://tonejs.github.io) and [ml5js](https://ml5js.org).
 
 Projects
 --------------------
@@ -12,6 +12,11 @@ Projects
 `TrumpNet` - Do you can write more than Donald Trump tweets?
 
 <img src="/TrumpNet/images/example1.png" width="320"> <img src="/TrumpNet/images/example2.png" width="320">
+
+`SoundEye` - Can you stand the SoundEyes?
+
+<img src="/SoundEye/images/example1.png" width="320"> <img src="/SoundEye/images/example2.png" width="320">
+
 
 Setup
 --------------------
@@ -41,6 +46,8 @@ $ cd DigitalArt
 $ python -m SimpleHTTPServer
 # check localhost:8000
 ```
+
+I would recommend to use Safari as a browser. Firefox makes it hard to preload images and Google Chrome makes it hard to work with audio - what a great set up. For Safari, make sure in settings you allow the 'localhost' to automatically play audio.
 
 <sup>1</sup>Some sketches work only as expected when the files are placed online, as the rely on "security" sensitive functionality like loading external files. If you try to view them locally without running a web server, you get some kind of "cross-origin" errors 😭 (see your browser's console). The solution is to serve the files using what's called a [local web server](https://github.com/processing/p5.js/wiki/Local-server). This is what happens when you run your own local server.
 
