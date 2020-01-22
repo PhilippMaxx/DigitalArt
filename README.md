@@ -21,6 +21,8 @@ Projects
 Setup
 --------------------
 
+I would recommend to use Google Chrome or Safari. Make sure you allow the webpage to access your computers camera, sound or microphone if needed.
+
 To run the sketches, you can go to the Github page: https://philippmaxx.github.io/DigitalArt/
 
 Or if you want to run the sketches locally: <a href="#running-the-sketches-locally">download the repository to your local machine</a>
@@ -47,8 +49,26 @@ $ python -m SimpleHTTPServer
 # check localhost:8000
 ```
 
-I would recommend to use Safari as a browser. Firefox makes it hard to preload images and Google Chrome makes it hard to work with audio - what a great set up. For Safari, make sure in settings you allow the 'localhost' to automatically play audio.
+On the local server for Google Chrome you need to work around the security when you want to use sound applictions at the moment. However this is kind of an advanced procedure and may only be followed when you feel confident with the steps. You need to access via a local HTTPS server. To do so, create a certificate first and follow the steps. Then execute the HTTPS server python script<sup>3</sup>.
+
+```
+$ openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
+$ python simple-https-server.py
+```
+
+Next, enable localhost to use an invalid certificate. To do so, type the following<sup>4</sup> to your Google Chrome search bar and check ENABLE on the marked entry.
+
+`chrome://flags/#allow-insecure-localhost`
+
+Again, enable your computers camera, sound or microphone and you are good to go.
+
+Comments
+--------------------
 
 <sup>1</sup>Some sketches work only as expected when the files are placed online, as the rely on "security" sensitive functionality like loading external files. If you try to view them locally without running a web server, you get some kind of "cross-origin" errors 😭 (see your browser's console). The solution is to serve the files using what's called a [local web server](https://github.com/processing/p5.js/wiki/Local-server). This is what happens when you run your own local server.
 
 <sup>2</sup>The default port is `8000`, but you can change the port number by specifying the number after the command `e.g. python -m SimpleHTTPServer 5000`
+
+<sup>3</sup>You should have python 2.x as a default installed when using mac or linux. However on windows I would recommend to use a shell and download the latest python 2.x version first. Code credit for the script: https://gist.github.com/dergachev/7028596
+
+<sup>4</sup> From a discussion on stackoverflow: https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate?page=2&tab=votes#tab-top
