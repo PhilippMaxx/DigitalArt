@@ -2,28 +2,27 @@
 // Tone.Noise(white) - noise
 // Tone.Autofilter - lfo
 
-var tileCount = 2;
+let tileCount = 2;
 
-var tileWidth;
-var tileHeight;
-var shapeSize = 150;
-var newShapeSize = shapeSize;
-var maxDist;
-var currentShape;
-var shapes;
+let tileWidth;
+let tileHeight;
+let shapeSize = 150;
+let newShapeSize = shapeSize;
+let maxDist;
+let currentShape;
+let shapes = [];
 
-var oscillator;
-var autoFilter;
+let oscillator;
+let autoFilter;
 
-var sizeMode = 0;
+let sizeMode = 0;
 
-var freqX;
-var freqY;
+let freqX;
+let freqY;
 
-var state = 0;
+let state = 0;
 
 function preload() {
-  shapes = [];
   shapes.push(loadImage('data/eye3.svg'));
   shapes.push(loadImage('data/eye2.svg'));
 }
@@ -69,22 +68,24 @@ function setup() {
 
 function draw() {
 
-  freqX = map(mouseX, 0, displayWidth, 0, 1);
-  freqY = map(mouseY, 0, displayHeight, 0, 1);
-  if (state==0) background((68 - 68*2*abs(freqX - 0.5)) + (68 - 68*2*abs(freqY - 0.5)),0,0);
-  if (state==1) background((255 - 255*2*abs(freqX - 0.5)) + (255 - 255*2*abs(freqY - 0.5)));
-  autoFilter.frequency.value = (8 - 7*2*abs(freqX - 0.5)) + (8 - 7*2*abs(freqY - 0.5));
-  autoFilter.filter.Q.value = (20 - 18*2*abs(freqX - 0.5)) + (20 - 18*2*abs(freqY - 0.5));
-  oscillator.detune.value = (1000 - 650*2*abs(freqX - 0.5)) + (1000 - 650*2*abs(freqY - 0.5));
-  autoPanner.frequency.value = (0.5 - abs(freqX - 0.5)) + (0.5 - abs(freqY - 0.5));
-  for (var gridY = 0; gridY < int((displayHeight/displayWidth) * tileCount); gridY++) {
-    for (var gridX = 0; gridX < tileCount; gridX++) {
+  freq = 1 - (abs(map(mouseX, 0, displayWidth, -0.5, 0.5)) + abs(map(mouseY, 0, displayHeight, -0.5, 0.5)));
+  
+  if (state==0) background(136*freq,0,0);
+  if (state==1) background(255*freq);
 
-      var posX = tileWidth * gridX + tileWidth / 2;
-      var posY = tileWidth * gridY + tileWidth / 2;
+  autoFilter.frequency.value = 14 * freq + 2;
+  autoFilter.filter.Q.value = 36 * freq + 4;
+  oscillator.detune.value = 1300 * freq + 700; 
+  autoPanner.frequency.value = freq;
+
+  for (let gridY = 0; gridY < int((displayHeight/displayWidth) * tileCount); gridY++) {
+    for (let gridX = 0; gridX < tileCount; gridX++) {
+
+      let posX = tileWidth * gridX + tileWidth / 2;
+      let posY = tileWidth * gridY + tileWidth / 2;
 
       // calculate angle between mouse position and actual position of the shape
-      var angle = atan2(mouseY - posY, mouseX - posX) ;
+      let angle = atan2(mouseY - posY, mouseX - posX) ;
 
       if (sizeMode == 0) newShapeSize = shapeSize;
       if (sizeMode == 1) newShapeSize = shapeSize * 1.5 - map(dist(mouseX, mouseY, posX, posY), 0, 500, 5, shapeSize);
