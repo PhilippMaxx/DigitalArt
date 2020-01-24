@@ -2,6 +2,10 @@ Digital Art
 ==================
 >Web based artworks powered by JavaScript. Tools used in this repository are mainly the JavaScript libraries [p5js](https://p5js.org), [threejs](https://threejs.org), [Tonejs](https://tonejs.github.io) and [ml5js](https://ml5js.org).
 
+You can see all projects on my Github page: https://philippmaxx.github.io/DigitalArt/.
+
+I would recommend to use Google Chrome or Safari. Make sure you allow the webpage to access your computers camera, sound or microphone if needed.
+
 Projects
 --------------------
 
@@ -21,15 +25,6 @@ Projects
 
 <img src="/TreeHouseXSaveSpace/images/example1.png" width="320"> <img src="/TreeHouseXSaveSpace/images/example2.png" width="320">
 
-
-Setup
---------------------
-
-I would recommend to use Google Chrome or Safari. Make sure you allow the webpage to access your computers camera, sound or microphone if needed.
-
-To run the sketches, you can go to the Github page: https://philippmaxx.github.io/DigitalArt/
-
-Or if you want to run the sketches locally: <a href="#running-the-sketches-locally">download the repository to your local machine</a>
 
 Running the Sketches locally
 --------------------
