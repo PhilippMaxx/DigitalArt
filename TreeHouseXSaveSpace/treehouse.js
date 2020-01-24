@@ -19,7 +19,7 @@ function main() {
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.set(40, 20, 40);
 
-  const cameraHelper = new THREE.CameraHelper(camera);
+  // const cameraHelper = new THREE.CameraHelper(camera);
 
   const controls = new OrbitControls(camera, view1Elem);
   controls.target.set(0, 15, 0);
@@ -87,7 +87,7 @@ function main() {
   // scene
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('white');
-  scene.add(cameraHelper);
+  // scene.add(cameraHelper);
 
   // plane 
   {
@@ -395,8 +395,8 @@ function main() {
   light.shadow.bias = - 0.005; // reduces self-shadowing on double-sided objects
   scene.add(light);
 
-  const helper = new THREE.PointLightHelper(light);
-  scene.add(helper);
+  // const helper = new THREE.PointLightHelper(light);
+  // scene.add(helper);
 
   // outer light 
   const color2 = '#e14444';
@@ -411,13 +411,13 @@ function main() {
   scene.add(light2);
   scene.add(light2.target);
   
-  const helper2 = new THREE.DirectionalLightHelper(light2);
-  scene.add(helper2);
+  //const helper2 = new THREE.DirectionalLightHelper(light2);
+  //scene.add(helper2);
   
   function updateLight() {
-    helper.update();
+    //helper.update();
     light2.target.updateMatrixWorld();
-    helper2.update();
+    //helper2.update();
   }
 
 
@@ -498,10 +498,10 @@ function main() {
       // adjust the camera for this aspect
       camera.aspect = aspect;
       camera.updateProjectionMatrix();
-      cameraHelper.update();
+      //cameraHelper.update();
 
       // don't draw the camera helper in the original view
-      cameraHelper.visible = false;
+      //cameraHelper.visible = false;
 
       scene.background.set("black");
 
@@ -518,7 +518,7 @@ function main() {
       camera2.updateProjectionMatrix();
 
       // draw the camera helper in the 2nd view
-      cameraHelper.visible = true;
+      // cameraHelper.visible = true;
 
       scene.background.set("black");
 
