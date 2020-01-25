@@ -41,7 +41,13 @@
 
       var player = new Tone.Player("tts.wav").toMaster();
 
-      var player2 = new Tone.Player("audio.mp3").toMaster();
+      var player2 = new Tone.Player({
+        'url': "audio.mp3",
+        "autostart" : true,
+        "loop" : true,
+
+      }
+      ).toMaster();
 
       // async function f() {
       // 
@@ -57,8 +63,6 @@
       // f();
 
       player.autostart = true;
-
-      player2.autostart = true;
 
       var SCREEN_WIDTH = window.innerWidth;
       var SCREEN_HEIGHT = window.innerHeight;
