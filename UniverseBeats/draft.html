@@ -1,0 +1,70 @@
+<!--
+
+  Credits:
+
+  Music by Ozan Yildiz
+
+  3D model by Simon Both
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Universe Beats</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/tone"></script>
+    
+    <style>
+      a {
+        color: #08f;
+      }
+      b {
+        color: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="info">cameras<br/>
+    <b>O</b> orthographic <b>P</b> perspective
+    </div>
+
+    <script type="module">
+      //var player = new Tone.Player("tts.wav").toMaster();
+
+      var osc = new Tone.Oscillator(440, "sine").toMaster().start(2);
+
+      var player2 = new Tone.Player({
+        'url': "audio.mp3",
+        "autostart" : false,
+        "loop" : true
+
+      }
+      ).toMaster();
+
+      Tone.Buffer.on('load', () => {
+        player2.start(2);
+        })
+
+      // async function f() {
+      // 
+      //   let promise = new Promise((resolve, reject) => {
+      //     setTimeout(() => resolve("done!"), 1000)
+      //   });
+      // 
+      //   let result = await promise; // wait until the promise resolves (*)
+      // 
+      //   alert(result); // "done!"
+      // }
+      // 
+      // f();
+
+      //player.autostart = true;
+
+
+    </script>
+
+  </body>
+</html>

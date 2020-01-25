@@ -39,15 +39,20 @@
 
       import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r112/examples/jsm/loaders/GLTFLoader.js';
 
-      var player = new Tone.Player("tts.wav").toMaster();
+      var player = new Tone.Player({
+        'url' : "tts.wav",
+        'autostart' : true
+        }).toMaster();
 
       var player2 = new Tone.Player({
         'url': "audio.mp3",
-        "autostart" : true,
-        "loop" : true,
+        "autostart" : false,
+        "loop" : true
+      }).toMaster();
 
-      }
-      ).toMaster();
+      Tone.Buffer.on('load', () => {
+        player2.start(2);
+      })
 
       // async function f() {
       // 
@@ -61,8 +66,6 @@
       // }
       // 
       // f();
-
-      player.autostart = true;
 
       var SCREEN_WIDTH = window.innerWidth;
       var SCREEN_HEIGHT = window.innerHeight;
@@ -121,22 +124,22 @@
 
         //
 
-          {
-            const skyColor = 0xB1E1FF;  // light blue
-            const groundColor = 0xB97A20;  // brownish orange
-            const intensity = 1;
-            const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-            scene.add(light);
-          }
+        {
+          const skyColor = "#7ACCFF";  // light blue
+          const groundColor = 0xB97A20;  // brownish orange
+          const intensity = 1.5;
+          const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+          scene.add(light);
+        }
         
-          //{
-          //  const color = 0xFFFFFF;
-          //  const intensity = 1;
-          //  const light = new THREE.DirectionalLight(color, intensity);
-          //  light.position.set(5, 10, 2);
-          //  scene.add(light);
-          //  scene.add(light.target);
-          //}
+       {
+          const color = 0xFFFFFF;
+          const intensity = 0.5;
+          const light = new THREE.DirectionalLight(color, intensity);
+          light.position.set(5, 10, 2);
+          scene.add(light);
+          scene.add(light.target);
+        }
 
         mesh = new THREE.Mesh(
           new THREE.SphereBufferGeometry( 100, 16, 8 ),
@@ -180,7 +183,7 @@
 
         var mesh3 = new THREE.Mesh(
           new THREE.TorusBufferGeometry(8, 2, 8, 24),
-          new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true } )
+          new THREE.MeshPhongMaterial( { color: "gray", wireframe: false } )
         );
         mesh3.position.z = 800;
         cameraRig.add( mesh3 );
@@ -190,7 +193,7 @@
         var geometry = new THREE.BufferGeometry();
         var vertices = [];
 
-        for ( var i = 0; i < 300000; i ++ ) {
+        for ( var i = 0; i < 200000; i ++ ) {
 
           vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // x
           vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // y
@@ -283,30 +286,34 @@
 
       //
 
-      function animate() {
+      function animate(time) {
 
         requestAnimationFrame( animate );
 
-        render();
+        render(time);
         stats.update();
 
       }
 
 
-      function render() {
+      function render(time) {
 
-        var r = Date.now() * 0.0005;
+        var r = time * 0.001 + 2;
 
         mesh.position.x = 700 * Math.cos( r );
         mesh.position.z = 700 * Math.sin( r );
         mesh.position.y = 700 * Math.sin( r );
 
-        mesh.children[ 0 ].position.x = 70 * Math.cos( 2 * r );
-        mesh.children[ 0 ].position.z = 70 * Math.sin( r );
+        mesh.children[ 0 ].position.x = 100 * Math.cos( 2 * r );
+        mesh.children[ 0 ].position.z = 100 * Math.sin( r );
 
-        if ( activeCamera === cameraPerspective ) {
+        if ( r <= 37 + 2 | r >= 55 + 2 ) {
 
-          cameraPerspective.fov = 35 + 30 * Math.sin( 0.5 * r );
+          activeHelper = cameraPerspectiveHelper;
+          activeCamera = cameraPerspective;
+
+
+          cameraPerspective.fov = 30 + 30 * Math.sin( 0.5 * r );
           cameraPerspective.far = mesh.position.length() + 500;
           cameraPerspective.updateProjectionMatrix();
 
@@ -316,6 +323,9 @@
           cameraOrthoHelper.visible = false;
 
         } else {
+
+          activeHelper = cameraOrthoHelper;
+          activeCamera = cameraOrtho;
 
           cameraOrtho.far = mesh.position.length() + 500;
           cameraOrtho.updateProjectionMatrix();
