@@ -190,15 +190,16 @@ function main() {
   }
 
 
-
-  const cube1 = makeInstance(geometry, "#white",  0, 15, 0);
-  // cube scale
-  cube1.scale.x = 5;
-  cube1.scale.y = 5;
-  cube1.scale.z = 5;
-  cube1.castShadow = true;
-  cube1.receiveShadow = true;
-  scene.add(cube1);
+  {
+    const cube1 = makeInstance(geometry, "#white",  0, 15, 0);
+    // cube scale
+    cube1.scale.x = 5;
+    cube1.scale.y = 5;
+    cube1.scale.z = 5;
+    cube1.castShadow = true;
+    cube1.receiveShadow = true;
+    scene.add(cube1);
+  }
 
   function addObject(x, y, z, obj) {
     obj.position.x = x * 1;
@@ -242,6 +243,7 @@ function main() {
     doit();
   }
 
+  // heart
   const shape = new THREE.Shape();
   const x = -2.5;
   const y = -5;
@@ -275,6 +277,7 @@ function main() {
 
 
   const targetGeometry = new THREE.SphereBufferGeometry(.5, 6, 3);
+  const loader = new THREE.TextureLoader();
   const targetMaterial = new THREE.MeshPhongMaterial({color: 0x00FF00, flatShading: true});
   const targetMesh = new THREE.Mesh(targetGeometry, targetMaterial);
 
@@ -342,28 +345,28 @@ function main() {
 
 
 
-  // Create a sine-like wave
-  const curve = new THREE.SplineCurve( [
-    new THREE.Vector2( -10, 0 ),
-    new THREE.Vector2( -5, 5 ),
-    new THREE.Vector2( 0, 0 ),
-    new THREE.Vector2( 5, -5 ),
-    new THREE.Vector2( 10, 0 ),
-    new THREE.Vector2( 5, 10 ),
-    new THREE.Vector2( -5, 10 ),
-    new THREE.Vector2( -10, -10 ),
-    new THREE.Vector2( -15, -8 ),
-    new THREE.Vector2( -10, 0 ),
-  ] );
-  {
-    const points = curve.getPoints( 50 );
-    const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    const material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
-    const splineObject = new THREE.Line( geometry, material );
-    splineObject.rotation.x = Math.PI * .5;
-    splineObject.position.y = 0.05;
-    scene.add(splineObject);
-  }
+  // // Create a sine-like wave
+  // const curve = new THREE.SplineCurve( [
+  //   new THREE.Vector2( -10, 0 ),
+  //   new THREE.Vector2( -5, 5 ),
+  //   new THREE.Vector2( 0, 0 ),
+  //   new THREE.Vector2( 5, -5 ),
+  //   new THREE.Vector2( 10, 0 ),
+  //   new THREE.Vector2( 5, 10 ),
+  //   new THREE.Vector2( -5, 10 ),
+  //   new THREE.Vector2( -10, -10 ),
+  //   new THREE.Vector2( -15, -8 ),
+  //   new THREE.Vector2( -10, 0 ),
+  // ] );
+  // {
+  //   const points = curve.getPoints( 50 );
+  //   const geometry = new THREE.BufferGeometry().setFromPoints( points );
+  //   const material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+  //   const splineObject = new THREE.Line( geometry, material );
+  //   splineObject.rotation.x = Math.PI * .5;
+  //   splineObject.position.y = 0.05;
+  //   scene.add(splineObject);
+  // }
 
   // const targetPosition = new THREE.Vector3();
 

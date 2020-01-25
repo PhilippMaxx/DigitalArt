@@ -1,0 +1,346 @@
+<!--
+
+  Credits:
+
+  Music by Ozan Yildiz
+
+  3D model by Simon Both
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>three.js webgl - cameras</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="../three.js/examples/main.css">
+    <script src="https://unpkg.com/tone"></script>
+    
+    <style>
+      a {
+        color: #08f;
+      }
+      b {
+        color: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="info">cameras<br/>
+    <b>O</b> orthographic <b>P</b> perspective
+    </div>
+
+    <script type="module">
+
+      import * as THREE from '../three.js/build/three.module.js';
+
+      import Stats from '../three.js/examples/jsm/libs/stats.module.js';
+
+      import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r112/examples/jsm/loaders/GLTFLoader.js';
+
+      var player = new Tone.Player("tts.wav").toMaster();
+
+      var player2 = new Tone.Player("audio.mp3").toMaster();
+
+      // async function f() {
+      // 
+      //   let promise = new Promise((resolve, reject) => {
+      //     setTimeout(() => resolve("done!"), 1000)
+      //   });
+      // 
+      //   let result = await promise; // wait until the promise resolves (*)
+      // 
+      //   alert(result); // "done!"
+      // }
+      // 
+      // f();
+
+      player.autostart = true;
+
+      player2.autostart = true;
+
+      var SCREEN_WIDTH = window.innerWidth;
+      var SCREEN_HEIGHT = window.innerHeight;
+      var aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+
+      var container, stats;
+      var camera, scene, renderer, mesh;
+      var cameraRig, activeCamera, activeHelper;
+      var cameraPerspective, cameraOrtho;
+      var cameraPerspectiveHelper, cameraOrthoHelper;
+      var frustumSize = 600;
+
+      init();
+      animate();
+
+      function init() {
+
+        container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        scene = new THREE.Scene();
+
+        //
+
+        camera = new THREE.PerspectiveCamera( 50, 0.5 * aspect, 1, 10000 );
+        camera.position.z = 2500;
+
+        cameraPerspective = new THREE.PerspectiveCamera( 50, 0.5 * aspect, 150, 1500 );
+
+        cameraPerspectiveHelper = new THREE.CameraHelper( cameraPerspective );
+        scene.add( cameraPerspectiveHelper );
+
+        //
+        cameraOrtho = new THREE.OrthographicCamera( 0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 150, 1500 );
+
+        cameraOrthoHelper = new THREE.CameraHelper( cameraOrtho );
+        scene.add( cameraOrthoHelper );
+
+        //
+
+        activeCamera = cameraPerspective;
+        activeHelper = cameraPerspectiveHelper;
+
+
+        // counteract different front orientation of cameras vs rig
+
+        cameraOrtho.rotation.y = Math.PI;
+        cameraPerspective.rotation.y = Math.PI;
+
+        cameraRig = new THREE.Group();
+
+        cameraRig.add( cameraPerspective );
+        cameraRig.add( cameraOrtho );
+
+        scene.add( cameraRig );
+
+        //
+
+          {
+            const skyColor = 0xB1E1FF;  // light blue
+            const groundColor = 0xB97A20;  // brownish orange
+            const intensity = 1;
+            const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+            scene.add(light);
+          }
+        
+          //{
+          //  const color = 0xFFFFFF;
+          //  const intensity = 1;
+          //  const light = new THREE.DirectionalLight(color, intensity);
+          //  light.position.set(5, 10, 2);
+          //  scene.add(light);
+          //  scene.add(light.target);
+          //}
+
+        mesh = new THREE.Mesh(
+          new THREE.SphereBufferGeometry( 100, 16, 8 ),
+          new THREE.MeshBasicMaterial( { color: 'silver', wireframe: true } )
+        );
+        scene.add( mesh );
+
+        {
+          const gltfLoader = new GLTFLoader();
+          gltfLoader.load('cubecross.glb', (gltf) => {
+            const root = gltf.scene;
+            root.position.y = 200;
+            root.scale.x = 20;
+            root.scale.y = 20;
+            root.scale.z = 20;
+            mesh.add(root);
+      
+            //// compute the box that contains all the stuff
+            //// from root and below
+            //const box = new THREE.Box3().setFromObject(root);
+      //
+            //const boxSize = box.getSize(new THREE.Vector3()).length();
+            //const boxCenter = box.getCenter(new THREE.Vector3());
+      //
+            //// set the camera to frame the box
+            //frameArea(boxSize * 0.5, boxSize, boxCenter, camera);
+      //
+            //// update the Trackball controls to handle the new size
+            //controls.maxDistance = boxSize * 10;
+            //controls.target.copy(boxCenter);
+            //controls.update();
+          });
+        }
+
+        // var mesh2 = new THREE.Mesh(
+        //   new THREE.SphereBufferGeometry( 50, 16, 8 ),
+        //   new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } )
+        // );
+        // mesh2.position.y = 150;
+        // mesh.add( mesh2 );
+
+        var mesh3 = new THREE.Mesh(
+          new THREE.TorusBufferGeometry(8, 2, 8, 24),
+          new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true } )
+        );
+        mesh3.position.z = 800;
+        cameraRig.add( mesh3 );
+
+        //
+
+        var geometry = new THREE.BufferGeometry();
+        var vertices = [];
+
+        for ( var i = 0; i < 10000; i ++ ) {
+
+          vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // x
+          vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // y
+          vertices.push( THREE.Math.randFloatSpread( 2000 ) ); // z
+
+        }
+
+        geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+        var particles = new THREE.Points( geometry, new THREE.PointsMaterial( { color: 0x888888 } ) );
+        scene.add( particles );
+
+
+        // {
+        //   const objLoader = new OBJLoader2();
+        //   objLoader.load('crosscube.obj', (root) => {
+        //     root.position.z = 150;
+        //     cameraRig.add(root);
+        //   });
+        // }
+
+        //
+
+        renderer = new THREE.WebGLRenderer( { antialias: true } );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+        container.appendChild( renderer.domElement );
+
+        renderer.autoClear = false;
+
+        //
+
+        stats = new Stats();
+        container.appendChild( stats.dom );
+
+        //
+
+        window.addEventListener( 'resize', onWindowResize, false );
+        document.addEventListener( 'keydown', onKeyDown, false );
+
+      }
+
+      //
+
+      function onKeyDown( event ) {
+
+        switch ( event.keyCode ) {
+
+          case 79: /*O*/
+
+            activeCamera = cameraOrtho;
+            activeHelper = cameraOrthoHelper;
+
+            break;
+
+          case 80: /*P*/
+
+            activeCamera = cameraPerspective;
+            activeHelper = cameraPerspectiveHelper;
+
+            break;
+
+        }
+
+      }
+
+      //
+
+      function onWindowResize() {
+
+        SCREEN_WIDTH = window.innerWidth;
+        SCREEN_HEIGHT = window.innerHeight;
+        aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+
+        renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+
+        camera.aspect = 0.5 * aspect;
+        camera.updateProjectionMatrix();
+
+        cameraPerspective.aspect = 0.5 * aspect;
+        cameraPerspective.updateProjectionMatrix();
+
+        cameraOrtho.left = - 0.5 * frustumSize * aspect / 2;
+        cameraOrtho.right = 0.5 * frustumSize * aspect / 2;
+        cameraOrtho.top = frustumSize / 2;
+        cameraOrtho.bottom = - frustumSize / 2;
+        cameraOrtho.updateProjectionMatrix();
+
+      }
+
+      //
+
+      function animate() {
+
+        requestAnimationFrame( animate );
+
+        render();
+        stats.update();
+
+      }
+
+
+      function render() {
+
+        var r = Date.now() * 0.0005;
+
+        mesh.position.x = 700 * Math.cos( r );
+        mesh.position.z = 700 * Math.sin( r );
+        mesh.position.y = 700 * Math.sin( r );
+
+        mesh.children[ 0 ].position.x = 70 * Math.cos( 2 * r );
+        mesh.children[ 0 ].position.z = 70 * Math.sin( r );
+
+        if ( activeCamera === cameraPerspective ) {
+
+          cameraPerspective.fov = 35 + 30 * Math.sin( 0.5 * r );
+          cameraPerspective.far = mesh.position.length() + 500;
+          cameraPerspective.updateProjectionMatrix();
+
+          cameraPerspectiveHelper.update();
+          cameraPerspectiveHelper.visible = true;
+
+          cameraOrthoHelper.visible = false;
+
+        } else {
+
+          cameraOrtho.far = mesh.position.length() + 500;
+          cameraOrtho.updateProjectionMatrix();
+
+          cameraOrthoHelper.update();
+          cameraOrthoHelper.visible = true;
+
+          cameraPerspectiveHelper.visible = false;
+
+        }
+
+        cameraRig.lookAt( mesh.position );
+
+        renderer.clear();
+
+        activeHelper.visible = false;
+
+        renderer.setViewport( 0, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT );
+        renderer.render( scene, activeCamera );
+
+        activeHelper.visible = true;
+
+        renderer.setViewport( SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT );
+        renderer.render( scene, camera );
+
+      }
+
+
+    </script>
+
+  </body>
+</html>
