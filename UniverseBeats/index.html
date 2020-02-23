@@ -1,11 +1,7 @@
 <!--
-
   Credits:
-
   Music by Ozan Yildiz
-
   3D model by Simon Both
-
 -->
 
 <!DOCTYPE html>
@@ -18,19 +14,23 @@
     <script src="https://unpkg.com/tone"></script>
     
     <style>
+      {
+        margin: 0;
+      }
       a {
         color: #08f;
       }
       b {
         color: lightgreen;
       }
+
     </style>
+
   </head>
   <body>
     <div id="info">cameras<br/>
     <b>O</b> orthographic <b>P</b> perspective
     </div>
-
     <script type="module">
 
       import * as THREE from 'https://threejs.org/build/three.module.js';
@@ -38,6 +38,23 @@
       import Stats from 'https://threejs.org/examples/jsm/libs/stats.module.js';
 
       import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r112/examples/jsm/loaders/GLTFLoader.js';
+
+      // import {GUI} from 'https://threejsfundamentals.org/threejs/../3rdparty/dat.gui.module.js';
+
+      // const canvas = document.querySelector('#c');
+
+
+      // const gui = new GUI();
+
+      // var obj = {
+      //   add: function() {
+      //     render();
+      //     canvas.toBlob((blob) => {
+      //       saveBlob(blob, `screencapture-${canvas.width}x${canvas.height}.png`);
+      //     });
+      //   }
+      // };
+      // gui.add(obj, "add").name("Save as png");
 
       var player = new Tone.Player({
         'url' : "tts.wav",
@@ -352,8 +369,6 @@
         renderer.render( scene, camera );
 
       }
-
-
     </script>
 
   </body>
